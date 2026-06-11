@@ -1,4 +1,3 @@
-readme = """
 # Cardiac Heart Detection
 
 Detects the heart location in chest X-rays using bounding box regression.
@@ -25,9 +24,3 @@ ResNet50 fine-tuned for bounding box regression (4 coordinate outputs).
 2. Run preprocess.ipynb
 3. Run train.ipynb
 4. Run evaluate.ipynb
-"""
-
-with open("/content/drive/MyDrive/cardiac-heart-detection/README.md", "w") as f:
-    f.write(readme)
-
-print("README created!")
