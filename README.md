@@ -1,26 +1,41 @@
-# Cardiac Heart Detection
+# Cardiac Heart Detection using ResNet50
 
-Detects the heart location in chest X-rays using bounding box regression.
+A deep learning model that detects the heart location in chest X-rays using bounding box regression, with cardiothoracic ratio calculation for clinical relevance.
+
+🔴 Live Demo: https://huggingface.co/spaces/Chosencodes/cardiac-heart-detection
+
+## Overview
+
+This project trains a ResNet50 model to localize the heart in frontal chest X-rays by predicting a bounding box around the cardiac region. The cardiothoracic ratio (CT ratio) is then calculated from the predicted box — a clinically used metric for detecting cardiomegaly (enlarged heart).
 
 ## Dataset
-RSNA Pneumonia Detection Challenge chest X-rays re-labeled for cardiac detection.
-496 labeled images, 400 train / 96 validation.
 
-## Model
-ResNet50 fine-tuned for bounding box regression (4 coordinate outputs).
+- **Source:** RSNA Pneumonia Detection Challenge (Kaggle)
+- **Re-labeled:** 496 chest X-rays labeled with cardiac bounding boxes
+- **Split:** 400 training / 96 validation
+- **Format:** DICOM (.dcm) converted to NumPy arrays (.npy)
+
+## Model Architecture
+
+- **Base model:** ResNet50 pretrained on ImageNet
+- **Input:** Single-channel (grayscale) chest X-ray — 224x224
+- **Output:** 4 bounding box coordinates [x_min, y_min, x_max, y_max]
+- **Loss function:** MSELoss (regression)
+- **Optimizer:** Adam (lr=1e-4)
+- **Framework:** PyTorch + PyTorch Lightning
 
 ## Results
-- Mean IoU: 75.8%
-- Overall MAE: 6.4 pixels on 224x224 images
 
-## Tech Stack
-- PyTorch
-- PyTorch Lightning
-- Albumentations
-- pydicom
+| Metric | Value |
+|--------|-------|
+| Mean IoU | 81.2% |
+| Overall MAE | 4.76 pixels |
+| Mean CT Ratio | 0.358 (normal range) |
+| High Confidence Samples (IoU > 0.8) | 60 / 96 |
+| Low Confidence Samples (IoU < 0.5) | 1 / 96 |
 
-## How to Run
-1. Download RSNA Pneumonia Detection Challenge dataset from Kaggle
-2. Run preprocess.ipynb
-3. Run train.ipynb
-4. Run evaluate.ipynb
+## Clinical Features
+
+- **Heart localization** — draws bounding box around the heart
+- **Cardiothoracic ratio** — heart width divided by chest width
+- **Cardiomegaly detection** — flags CT ratio > 0.5 as possibly enlarged
