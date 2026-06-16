@@ -39,3 +39,7 @@ This project trains a ResNet50 model to localize the heart in frontal chest X-ra
 - **Heart localization** — draws bounding box around the heart
 - **Cardiothoracic ratio** — heart width divided by chest width
 - **Cardiomegaly detection** — flags CT ratio > 0.5 as possibly enlarged
+
+
+## Note: Model is optimized for RSNA-style frontal chest X-rays.
+Best results with standardized PA/AP view radiographs.
